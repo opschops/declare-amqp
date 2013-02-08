@@ -1,0 +1,15 @@
+exchanges:
+  - name: example_exchange
+    type: direct
+    durable: True
+    auto_delete: False
+    arguments:
+      alternate-exchange: your_alternate_exchange
+
+queues:
+  - name: test_queue
+    auto_delete: False
+    durable: True
+    bindings:
+      - exchange: example_exchange
+        binding_key: test_binding

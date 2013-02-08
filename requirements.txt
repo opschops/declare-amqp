@@ -1,6 +1,8 @@
 coverage
+haigha==0.5.9
 mock
 nose
 pea
 sphinx
+pyyaml
 -e git://github.com/lacostej/nosyd.git#egg=nosyd
