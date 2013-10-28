@@ -13,3 +13,9 @@ queues:
     bindings:
       - exchange: example_exchange
         binding_key: test_binding
+
+  - name: test_queue_2
+    auto_delete: False
+    durable: True
+    bindings:
+      - exchange: example_exchange
