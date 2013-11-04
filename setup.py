@@ -9,7 +9,7 @@ def read(fname):
 def run_setup():
     setup(
         name='declare-amqp',
-        version='0.0.4',
+        version='0.0.5',
         description='A way to declare your AMQP exchanges, queues, and bindings outside of the application',
         keywords = 'amqp',
         url='http://github.com/philipcristiano/declare-amqp',
