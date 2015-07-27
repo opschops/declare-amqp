@@ -68,8 +68,8 @@ def run(args):
                         binding['exchange']
                     )
             except AttributeError as ae:
-        print ae
-        print 'Declare conflict! This must be fixed manually'
+                print ae
+                print 'Declare conflict! This must be fixed manually'
                 sys.exit(1)
     connection.close()
 
