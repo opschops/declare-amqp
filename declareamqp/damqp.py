@@ -1,9 +1,7 @@
 from argparse import ArgumentParser
 import os
 import sys
-
-from haigha.connections.rabbit_connection import RabbitConnection
-from haigha.message import Message
+import pika
 import yaml
 
 
@@ -13,19 +11,21 @@ def run(args):
     password = os.getenv('AMQP_PASS', 'guest')
     vhost = os.getenv('AMQP_VHOST', '/')
 
-    connection = RabbitConnection(
-      user=user, password=password,
-      vhost=vhost, host=host,
-      heartbeat=None, debug=True)
+    credentials = pika.PlainCredentials(user, password)
+    parameters = pika.ConnectionParameters(
+      credentials=credentials,
+      virtual_host=vhost, host=host)
 
     config = get_config(args.config)
 
+    connection = pika.BlockingConnection(parameters)
     ch = connection.channel()
+
     for exchange in config.get('exchanges'):
         print 'Declaring exchange:'
         print '\t', exchange
         try:
-            ch.exchange.declare(
+            ch.exchange_declare(
                 exchange['name'],
                 exchange['type'],
                 durable=exchange['durable'],
@@ -41,7 +41,7 @@ def run(args):
         print 'Declaring queue:'
         print '\t', queue
         try:
-            ch.queue.declare(
+            ch.queue_declare(
                 queue['name'],
                 auto_delete=queue['auto_delete'],
                 durable=queue['durable'],
@@ -57,18 +57,19 @@ def run(args):
             try:
 
                 if binding.get('binding_key'):
-                    ch.queue.bind(
+                    ch.queue_bind(
                         queue['name'],
                         binding['exchange'],
                         binding['binding_key'],
                     )
                 else:
-                    ch.queue.bind(
+                    ch.queue_bind(
                         queue['name'],
                         binding['exchange']
                     )
-            except AttributeError:
-                print 'Declare conflict! This must be fixed manually'
+            except AttributeError as ae:
+        print ae
+        print 'Declare conflict! This must be fixed manually'
                 sys.exit(1)
     connection.close()
 

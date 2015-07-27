@@ -1,5 +1,5 @@
 coverage
-haigha==0.5.9
+pika
 mock
 nose
 pea

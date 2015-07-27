@@ -18,7 +18,7 @@ def run_setup():
         license='BSD',
         packages=['declareamqp'],
         install_requires=[
-            'haigha>=0.5.9',
+            'pika',
             'pyyaml',
         ],
         test_suite='tests',
