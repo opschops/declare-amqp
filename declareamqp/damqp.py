@@ -55,11 +55,18 @@ def run(args):
             print 'Binding queue:'
             print '\t', binding
             try:
-                ch.queue.bind(
-                    queue['name'],
-                    binding['exchange'],
-                    binding['binding_key'],
-                )
+
+                if binding.get('binding_key'):
+                    ch.queue.bind(
+                        queue['name'],
+                        binding['exchange'],
+                        binding['binding_key'],
+                    )
+                else:
+                    ch.queue.bind(
+                        queue['name'],
+                        binding['exchange']
+                    )
             except AttributeError:
                 print 'Declare conflict! This must be fixed manually'
                 sys.exit(1)
