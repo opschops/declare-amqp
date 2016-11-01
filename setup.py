@@ -9,7 +9,7 @@ def read(fname):
 def run_setup():
     setup(
         name='declare-amqp',
-        version='0.0.4',
+        version='0.0.5',
         description='A way to declare your AMQP exchanges, queues, and bindings outside of the application',
         keywords = 'amqp',
         url='http://github.com/philipcristiano/declare-amqp',
@@ -18,7 +18,7 @@ def run_setup():
         license='BSD',
         packages=['declareamqp'],
         install_requires=[
-            'haigha>=0.5.9',
+            'pika',
             'pyyaml',
         ],
         test_suite='tests',
